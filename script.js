@@ -5,7 +5,6 @@ let currentZone = 0; // 0: 1~250, 1: 251~500, 2: 501~750, 3: 751~1000
 
 // [책 정리 시작] 버튼을 누를 때 실행
 function startGame() {
-    // 1~1000번 책 데이터 생성 (의미 있는 책들만 특별 텍스트 부여)
     books = [];
     for (let i = 1; i <= 1000; i++) {
         let title = `${i}번째 책`;
@@ -25,20 +24,20 @@ function startGame() {
         books.push({ id: i, title: title, desc: desc });
     }
 
-    // 🌟 실행할 때마다 책들을 완전히 무작위로 섞기!
+    // 책 랜덤 섞기
     for (let i = books.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         [books[i], books[j]] = [books[j], books[i]];
     }
 
-    // 화면 전환 (시작 화면 숨기고 게임 메인 화면 보이기)
+    // 화면 전환
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
 
     render();
 }
 
-// 구역 변경 (하단 4개 버튼)
+// 구역 변경
 function changeZone(zoneIndex) {
     currentZone = zoneIndex;
     render();
@@ -50,7 +49,7 @@ function selectSlot(index) {
     renderInventory();
 }
 
-// 책장 칸 클릭 (인벤토리에 든 책과 교체하거나 내용 보기)
+// 책장 칸 클릭
 function clickBook(globalIndex) {
     let shelfBook = books[globalIndex];
 
@@ -58,11 +57,13 @@ function clickBook(globalIndex) {
         let temp = inventory[selectedSlot];
         inventory[selectedSlot] = shelfBook;
         books[globalIndex] = temp;
-        selectedSlot = null;
-        render();
+        selectedSlot = null; // 선택 해제
     } else {
         showModal(shelfBook);
     }
+
+    // 화면 갱신 (책장 사라짐 방지)
+    render();
 }
 
 // 팝업창 관리
@@ -87,7 +88,12 @@ function renderInventory() {
     for (let i = 0; i < 5; i++) {
         let slot = document.createElement('div');
         slot.className = `inv-slot ${selectedSlot === i ? 'selected' : ''}`;
-        slot.onclick = () => selectSlot(i);
+        slot.onclick = (function(idx) {
+            return function() {
+                selectSlot(idx);
+            };
+        })(i);
+
         if (inventory[i]) {
             slot.innerText = `#${inventory[i].id}`;
         } else {
@@ -99,7 +105,7 @@ function renderInventory() {
 
 function renderShelf() {
     let shelfArea = document.getElementById('shelf-area');
-    shelfArea.innerHTML = '';
+    shelfArea.innerHTML = ''; // 책장 영역 초기화 후 안전하게 다시 그림
 
     let startIdx = currentZone * 250;
     
@@ -117,12 +123,26 @@ function renderShelf() {
             let bookObj = books[globalIdx];
 
             let bookEl = document.createElement('div');
-            // 제자리를 찾은 책은 초록색(.correct)으로 바뀜
-            let isCorrect = bookObj.id === globalIdx + 1;
-            bookEl.className = `book ${isCorrect ? 'correct' : ''}`;
-            bookEl.innerText = bookObj.id;
-            bookEl.onclick = () => clickBook(globalIdx);
             
+            if (bookObj) {
+                let isCorrect = bookObj.id === globalIdx + 1;
+                bookEl.className = `book ${isCorrect ? 'correct' : ''}`;
+                // 위에 원래 번호(노란색), 아래에 현재 칸 번호 표시
+                bookEl.innerHTML = `
+                    <span class="original-num">#${bookObj.id}</span>
+                    <span>${globalIdx + 1}</span>
+                `;
+            } else {
+                bookEl.className = `book`;
+                bookEl.innerHTML = `<span>-</span>`;
+            }
+
+            bookEl.onclick = (function(idx) {
+                return function() {
+                    clickBook(idx);
+                };
+            })(globalIdx);
+
             rowDiv.appendChild(bookEl);
         }
         shelfArea.appendChild(rowDiv);
