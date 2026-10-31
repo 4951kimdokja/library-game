@@ -92,11 +92,6 @@ function renderInventory() {
     }
 }
 
-// 🌟 숫자를 한 글자씩 쪼개서 세로로 한 줄씩 출력해주는 헬퍼 함수
-function makeVerticalText(str) {
-    return str.split('').map(char => `<span>${char}</span>`).join('');
-}
-
 function renderShelf() {
     let shelfArea = document.getElementById('shelf-area');
     shelfArea.innerHTML = '';
@@ -109,6 +104,9 @@ function renderShelf() {
         rowLabel.innerText = `--- ${row + 1}단 (${startIdx + row * 50 + 1} ~ ${startIdx + (row + 1) * 50}) ---`;
         shelfArea.appendChild(rowLabel);
 
+        let wrapper = document.createElement('div');
+        wrapper.className = 'shelf-wrapper';
+
         let rowDiv = document.createElement('div');
         rowDiv.className = 'shelf-container';
 
@@ -116,31 +114,42 @@ function renderShelf() {
             let globalIdx = startIdx + (row * 50) + col;
             let bookObj = books[globalIdx];
 
+            // 책 슬롯 (책장 위 원래 번호 + 책 본체를 함께 담음)
+            let slotEl = document.createElement('div');
+            slotEl.className = 'book-slot';
+
+            // 1. 책장 위 원래 번호 (예: #3)
+            let origNumEl = document.createElement('div');
+            origNumEl.className = 'original-num';
+            if (bookObj) {
+                origNumEl.innerText = `#${bookObj.id}`;
+            }
+            slotEl.appendChild(origNumEl);
+
+            // 2. 책 본체 (현재 칸 번호 세로 쓰기)
             let bookEl = document.createElement('div');
-            
             if (bookObj) {
                 let isCorrect = bookObj.id === globalIdx + 1;
                 bookEl.className = `book ${isCorrect ? 'correct' : ''}`;
-                
-                // 원래 번호와 현재 칸 번호를 글자 단위로 쪼개어 세로 배치
-                let origText = makeVerticalText(String(bookObj.id));
-                let currText = makeVerticalText(String(globalIdx + 1));
-
-                bookEl.innerHTML = `
-                    <div class="original-num">${origText}</div>
-                    <div class="current-num">${currText}</div>
-                `;
+                bookEl.innerText = String(globalIdx + 1);
             } else {
                 bookEl.className = `book`;
-                bookEl.innerHTML = `<span>-</span>`;
+                bookEl.innerText = "-";
             }
 
+            bookEl.onclick = (function(idx) {
+                return function() { clickBox(idx); }; // clickBook
+            })(globalIdx);
+            
+            // 이벤트 연결 수정
             bookEl.onclick = (function(idx) {
                 return function() { clickBook(idx); };
             })(globalIdx);
 
-            rowDiv.appendChild(bookEl);
+            slotEl.appendChild(bookEl);
+            rowDiv.appendChild(slotEl);
         }
-        shelfArea.appendChild(rowDiv);
+        wrapper.appendChild(rowDiv);
+        shelfArea.appendChild(wrapper);
     }
 }
