@@ -114,24 +114,21 @@ function renderShelf() {
             let globalIdx = startIdx + (row * 50) + col;
             let bookObj = books[globalIdx];
 
-            // 책 슬롯 컨테이너
             let slotEl = document.createElement('div');
             slotEl.className = 'book-slot';
 
-            // 1. 책 바로 위에 위치한 조그마한 원래 번호 칸 (.original-box)
+            // 1. 위쪽 조그마한 칸: 현재 칸의 원래 위치 번호 (슬롯 번호: globalIdx + 1)
             let originalBox = document.createElement('div');
             originalBox.className = 'original-box';
-            if (bookObj) {
-                originalBox.innerText = bookObj.id;
-            }
+            originalBox.innerText = globalIdx + 1;
             slotEl.appendChild(originalBox);
 
-            // 2. 책 본체 (현재 위치 번호가 세로로 표시됨)
+            // 2. 책 본체: 꽂혀 있는 책의 원래 번호 (bookObj.id)를 세로로 표시
             let bookEl = document.createElement('div');
             if (bookObj) {
                 let isCorrect = bookObj.id === globalIdx + 1;
                 bookEl.className = `book ${isCorrect ? 'correct' : ''}`;
-                bookEl.innerText = String(globalIdx + 1);
+                bookEl.innerText = String(bookObj.id);
             } else {
                 bookEl.className = `book`;
                 bookEl.innerText = "-";
