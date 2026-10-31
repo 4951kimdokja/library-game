@@ -84,7 +84,7 @@ function renderInventory() {
         })(i);
 
         if (inventory[i]) {
-            slot.innerText = `#${inventory[i].id}`;
+            slot.innerText = `#${String(inventory[i].id).padStart(4, '0')}`;
         } else {
             slot.innerText = "빈칸";
         }
@@ -117,21 +117,27 @@ function renderShelf() {
             let slotEl = document.createElement('div');
             slotEl.className = 'book-slot';
 
-            // 1. 위쪽 조그마한 칸: 현재 칸의 원래 위치 번호 (슬롯 번호: globalIdx + 1)
+            // 1. 위쪽 조그마한 칸: 책의 '원래 번호' (4자리, 예: 0001)
             let originalBox = document.createElement('div');
             originalBox.className = 'original-box';
-            originalBox.innerText = globalIdx + 1;
+            if (bookObj) {
+                originalBox.innerText = String(bookObj.id).padStart(4, '0');
+            } else {
+                originalBox.innerText = "";
+            }
             slotEl.appendChild(originalBox);
 
-            // 2. 책 본체: 꽂혀 있는 책의 원래 번호 (bookObj.id)를 세로로 표시
+            // 2. 책 본체: 현재 '슬롯(칸) 번호'를 4자리 세로쓰기로 표시 (예: 0023)
             let bookEl = document.createElement('div');
             if (bookObj) {
                 let isCorrect = bookObj.id === globalIdx + 1;
                 bookEl.className = `book ${isCorrect ? 'correct' : ''}`;
-                bookEl.innerText = String(bookObj.id);
+                
+                let slotNumStr = String(globalIdx + 1).padStart(4, '0');
+                bookEl.innerHTML = slotNumStr.split('').map(char => `<span>${char}</span>`).join('');
             } else {
                 bookEl.className = `book`;
-                bookEl.innerText = "-";
+                bookEl.innerHTML = `<span>-</span>`;
             }
 
             bookEl.onclick = (function(idx) {
