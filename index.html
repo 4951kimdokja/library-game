@@ -4,12 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1,000권의 서재</title>
-    <!-- 디자인 파일 연결 -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- 1. 시작 화면 -->
     <div id="start-screen" class="screen active">
         <div class="start-container">
             <h1>📚 1,000권의 서재</h1>
@@ -18,20 +16,17 @@
         </div>
     </div>
 
-    <!-- 2. 게임 메인 화면 -->
     <div id="game-screen" class="screen">
         <h1>📚 1,000권의 서재</h1>
         
-        <!-- 인벤토리 (최대 5개) -->
         <div class="inventory-section">
             <div>내 소지품 (최대 5권)</div>
             <div class="inventory" id="inventory-slots"></div>
         </div>
 
-        <!-- 책장 영역 (5단) -->
+        <!-- 책장 영역 -->
         <div id="shelf-area"></div>
 
-        <!-- 하단 고정 구역 이동 버튼 4개 -->
         <div class="bottom-nav">
             <button onclick="changeZone(0)">1~250</button>
             <button onclick="changeZone(1)">251~500</button>
@@ -40,7 +35,6 @@
         </div>
     </div>
 
-    <!-- 설명창 팝업 -->
     <div id="modal" onclick="closeModal()">
         <div class="modal-content" onclick="event.stopPropagation()">
             <h3 id="modal-title">제목</h3>
@@ -49,7 +43,6 @@
         </div>
     </div>
 
-    <!-- 게임 로직 파일 연결 -->
     <script src="script.js"></script>
 </body>
 </html>
