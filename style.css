@@ -58,7 +58,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     overflow-x: auto;
     background: #dcd6cd;
     border-radius: 6px;
-    padding: 12px 6px 6px 6px;
+    padding: 10px 6px 6px 6px;
     margin-bottom: 8px;
     -webkit-overflow-scrolling: touch;
 }
@@ -76,7 +76,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     color: #555;
 }
 
-/* 각 책 칸 (위쪽 여백에 원래 번호가 들어갈 공간 확보) */
+/* 책 한 칸의 전체 영역 (위쪽 조그마한 칸 + 아래쪽 책 본체) */
 .book-slot {
     display: flex;
     flex-direction: column;
@@ -84,17 +84,23 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     width: 32px;
 }
 
-/* 책장 위 조그마한 원래 번호 */
-.original-num {
-    font-size: 0.55rem;
-    color: #d97706;
+/* 🌟 책 바로 위에 뜨는 조그마한 원래 번호 칸 */
+.original-box {
+    width: 28px;
+    height: 16px;
+    background: #fff8e7;
+    border: 1px solid #b8860b;
+    border-radius: 2px;
+    font-size: 0.5rem;
+    color: #8b4513;
     font-weight: bold;
-    height: 14px;
-    line-height: 14px;
-    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3px;
 }
 
-/* 책 본체: 세로쓰기 적용 */
+/* 책 본체: 세로쓰기 적용 (현재 칸 번호만 세로로) */
 .book {
     width: 32px;
     height: 70px;
@@ -108,7 +114,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     user-select: none;
     font-size: 0.7rem;
     font-weight: bold;
-    writing-mode: vertical-rl; /* 세로로 글자 정렬 */
+    writing-mode: vertical-rl; /* 숫자가 세로로 떨어지게 설정 */
     text-orientation: upright; /* 숫자가 눕지 않고 바르게 서도록 설정 */
     letter-spacing: 2px;
     box-sizing: border-box;
