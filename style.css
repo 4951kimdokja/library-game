@@ -76,7 +76,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     color: #555;
 }
 
-/* 책 한 칸의 전체 영역 (위쪽 조그마한 칸 + 아래쪽 책 본체) */
+/* 책 한 칸의 전체 영역 */
 .book-slot {
     display: flex;
     flex-direction: column;
@@ -84,7 +84,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     width: 32px;
 }
 
-/* 🌟 책 바로 위에 뜨는 조그마한 원래 번호 칸 */
+/* 🌟 책 바로 위에 뜨는 조그마한 칸 (슬롯 번호 표시) */
 .original-box {
     width: 28px;
     height: 16px;
@@ -100,7 +100,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     margin-bottom: 3px;
 }
 
-/* 책 본체: 세로쓰기 적용 (현재 칸 번호만 세로로) */
+/* 책 본체: 세로쓰기 적용 (책의 원래 번호가 세로로 표시됨) */
 .book {
     width: 32px;
     height: 70px;
@@ -114,8 +114,8 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     user-select: none;
     font-size: 0.7rem;
     font-weight: bold;
-    writing-mode: vertical-rl; /* 숫자가 세로로 떨어지게 설정 */
-    text-orientation: upright; /* 숫자가 눕지 않고 바르게 서도록 설정 */
+    writing-mode: vertical-rl;
+    text-orientation: upright;
     letter-spacing: 2px;
     box-sizing: border-box;
 }
