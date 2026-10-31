@@ -76,7 +76,6 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     color: #555;
 }
 
-/* 책 한 칸의 전체 영역 */
 .book-slot {
     display: flex;
     flex-direction: column;
@@ -84,7 +83,7 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     width: 32px;
 }
 
-/* 🌟 책 바로 위에 뜨는 조그마한 칸 (슬롯 번호 표시) */
+/* 위쪽 조그마한 칸 (책의 원래 번호) */
 .original-box {
     width: 28px;
     height: 16px;
@@ -100,24 +99,31 @@ h1 { font-size: 1.3rem; margin: 8px 0; }
     margin-bottom: 3px;
 }
 
-/* 책 본체: 세로쓰기 적용 (책의 원래 번호가 세로로 표시됨) */
+/* 책 본체: 현재 슬롯 번호가 세로로 완벽하게 떨어지도록 정렬 */
 .book {
     width: 32px;
-    height: 70px;
+    height: 90px;
     background: #a0522d;
     color: white;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     border-radius: 2px;
     user-select: none;
-    font-size: 0.7rem;
+    font-size: 0.65rem;
     font-weight: bold;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    letter-spacing: 2px;
     box-sizing: border-box;
+    padding: 2px 0;
+    gap: 1px;
+}
+
+.book span {
+    display: block;
+    width: 100%;
+    text-align: center;
+    line-height: 1;
 }
 
 .book.correct {
