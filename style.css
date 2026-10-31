@@ -1,0 +1,144 @@
+body {
+    font-family: sans-serif;
+    background: #f4f1ea;
+    margin: 0;
+    padding: 10px;
+    color: #333;
+    text-align: center;
+    padding-bottom: 70px; /* 하단 고정 버튼에 내용이 가리지 않도록 여백 */
+}
+
+/* 화면 전환용 클래스 */
+.screen {
+    display: none;
+}
+.screen.active {
+    display: block;
+}
+
+/* 시작 화면 디자인 */
+.start-container {
+    margin-top: 100px;
+}
+.start-btn {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    background: #8b5a2b;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+.start-btn:active {
+    background: #5c3812;
+}
+
+/* 메인 화면 요소들 */
+h1 { font-size: 1.4rem; margin: 10px 0; }
+.inventory-section {
+    background: #e3dcd2;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+}
+.inventory {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-top: 5px;
+}
+.inv-slot {
+    width: 45px;
+    height: 55px;
+    background: white;
+    border: 2px dashed #8b5a2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+    border-radius: 4px;
+}
+.inv-slot.selected {
+    border: 2px solid #ff4500;
+    background: #fff0eb;
+}
+
+/* 책장 영역 디자인 */
+.shelf-container {
+    display: grid;
+    grid-template-columns: repeat(50, 22px);
+    gap: 2px;
+    overflow-x: auto;
+    padding: 8px;
+    background: #dcd6cd;
+    border-radius: 8px;
+    margin-bottom: 8px;
+}
+.row-label {
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-align: left;
+    margin: 4px 0 2px 4px;
+    color: #555;
+}
+.book {
+    width: 22px;
+    height: 65px;
+    background: #a0522d;
+    color: white;
+    font-size: 0.55rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    writing-mode: vertical-rl;
+    cursor: pointer;
+    border-radius: 2px;
+    user-select: none;
+}
+.book.correct {
+    background: #2e8b57; /* 제자리에 꽂히면 초록색으로 변함! */
+}
+
+/* 하단 고정 구역 이동 버튼 */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #d4cbb8;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+}
+.bottom-nav button {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+    background: #8b5a2b;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* 팝업 설명창 */
+#modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.5);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 300px;
+    text-align: left;
+}
