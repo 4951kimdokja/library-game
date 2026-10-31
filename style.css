@@ -83,22 +83,31 @@ h1 { font-size: 1.4rem; margin: 10px 0; }
     margin: 4px 0 2px 4px;
     color: #555;
 }
+
+/* 책 모양 및 세로 배치 스타일 */
 .book {
     width: 22px;
     height: 65px;
     background: #a0522d;
     color: white;
-    font-size: 0.55rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    writing-mode: vertical-rl;
     cursor: pointer;
     border-radius: 2px;
     user-select: none;
+    font-size: 0.6rem;
+    font-weight: bold;
+}
+/* 책 위에 작게 표시될 원래 번호 */
+.book .original-num {
+    font-size: 0.45rem;
+    color: #ffeb3b; 
+    margin-bottom: 2px;
 }
 .book.correct {
-    background: #2e8b57; /* 제자리에 꽂히면 초록색으로 변함! */
+    background: #2e8b57; /* 제자리를 찾으면 초록색! */
 }
 
 /* 하단 고정 구역 이동 버튼 */
