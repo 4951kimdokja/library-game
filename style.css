@@ -5,21 +5,13 @@ body {
     padding: 10px;
     color: #333;
     text-align: center;
-    padding-bottom: 70px; /* 하단 고정 버튼에 내용이 가리지 않도록 여백 */
+    padding-bottom: 70px;
 }
 
-/* 화면 전환용 클래스 */
-.screen {
-    display: none;
-}
-.screen.active {
-    display: block;
-}
+.screen { display: none; }
+.screen.active { display: block; }
 
-/* 시작 화면 디자인 */
-.start-container {
-    margin-top: 100px;
-}
+.start-container { margin-top: 100px; }
 .start-btn {
     padding: 15px 30px;
     font-size: 1.2rem;
@@ -30,11 +22,8 @@ body {
     cursor: pointer;
     margin-top: 20px;
 }
-.start-btn:active {
-    background: #5c3812;
-}
+.start-btn:active { background: #5c3812; }
 
-/* 메인 화면 요소들 */
 h1 { font-size: 1.4rem; margin: 10px 0; }
 .inventory-section {
     background: #e3dcd2;
@@ -65,7 +54,6 @@ h1 { font-size: 1.4rem; margin: 10px 0; }
     background: #fff0eb;
 }
 
-/* 책장 영역 디자인 */
 .shelf-container {
     display: grid;
     grid-template-columns: repeat(50, 22px);
@@ -84,38 +72,46 @@ h1 { font-size: 1.4rem; margin: 10px 0; }
     color: #555;
 }
 
-/* 책 모양 및 세로 글씨 정렬 스타일 */
+/* 🌟 세로쓰기 속성 없이, flex로 글자를 완전히 한 줄씩 세로로 떨어뜨림 */
 .book {
     width: 22px;
-    height: 65px;
+    height: 75px;
     background: #a0522d;
     color: white;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding-top: 6px;
+    padding-top: 4px;
     cursor: pointer;
     border-radius: 2px;
     user-select: none;
     font-size: 0.55rem;
     font-weight: bold;
-    writing-mode: vertical-rl; /* 숫자가 세로 방향으로 흐르도록 설정 */
-    text-orientation: upright; /* 숫자가 옆으로 눕지 않고 바로 서있게 설정 */
-    gap: 6px;
+    line-height: 1.1;
 }
 
-/* 책 위에 작게 표시될 원래 번호 */
+/* 원래 번호 (노란색, 세로로 글자 한 자씩 쪼개짐) */
 .book .original-num {
     font-size: 0.45rem;
-    color: #ffeb3b; 
+    color: #ffeb3b;
+    margin-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 현재 위치 번호도 세로로 쪼개질 수 있는 컨테이너 */
+.book .current-num {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .book.correct {
-    background: #2e8b57; /* 제자리를 찾으면 초록색! */
+    background: #2e8b57;
 }
 
-/* 하단 고정 구역 이동 버튼 */
 .bottom-nav {
     position: fixed;
     bottom: 0;
@@ -137,7 +133,6 @@ h1 { font-size: 1.4rem; margin: 10px 0; }
     cursor: pointer;
 }
 
-/* 팝업 설명창 */
 #modal {
     display: none;
     position: fixed;
