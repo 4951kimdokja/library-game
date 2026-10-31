@@ -1,9 +1,8 @@
 let books = [];
 let inventory = [null, null, null, null, null];
 let selectedSlot = null;
-let currentZone = 0; // 0: 1~250, 1: 251~500, 2: 501~750, 3: 751~1000
+let currentZone = 0;
 
-// [책 정리 시작] 버튼을 누를 때 실행
 function startGame() {
     books = [];
     for (let i = 1; i <= 1000; i++) {
@@ -24,32 +23,27 @@ function startGame() {
         books.push({ id: i, title: title, desc: desc });
     }
 
-    // 책 랜덤 섞기
     for (let i = books.length - 1; i > 0; i--) {
         let j = Math.floor(Math.random() * (i + 1));
         [books[i], books[j]] = [books[j], books[i]];
     }
 
-    // 화면 전환
     document.getElementById('start-screen').classList.remove('active');
     document.getElementById('game-screen').classList.add('active');
 
     render();
 }
 
-// 구역 변경
 function changeZone(zoneIndex) {
     currentZone = zoneIndex;
     render();
 }
 
-// 인벤토리 슬롯 선택
 function selectSlot(index) {
     selectedSlot = index;
     renderInventory();
 }
 
-// 책장 칸 클릭
 function clickBook(globalIndex) {
     let shelfBook = books[globalIndex];
 
@@ -57,16 +51,14 @@ function clickBook(globalIndex) {
         let temp = inventory[selectedSlot];
         inventory[selectedSlot] = shelfBook;
         books[globalIndex] = temp;
-        selectedSlot = null; // 선택 해제
+        selectedSlot = null;
     } else {
         showModal(shelfBook);
     }
 
-    // 화면 갱신 (책장 사라짐 방지)
     render();
 }
 
-// 팝업창 관리
 function showModal(book) {
     document.getElementById('modal-title').innerText = book ? book.title : "빈 칸";
     document.getElementById('modal-desc').innerText = book ? book.desc : "책이 없습니다.";
@@ -76,7 +68,6 @@ function closeModal() {
     document.getElementById('modal').style.display = 'none';
 }
 
-// 화면 렌더링
 function render() {
     renderInventory();
     renderShelf();
@@ -89,9 +80,7 @@ function renderInventory() {
         let slot = document.createElement('div');
         slot.className = `inv-slot ${selectedSlot === i ? 'selected' : ''}`;
         slot.onclick = (function(idx) {
-            return function() {
-                selectSlot(idx);
-            };
+            return function() { selectSlot(idx); };
         })(i);
 
         if (inventory[i]) {
@@ -103,9 +92,14 @@ function renderInventory() {
     }
 }
 
+// 🌟 숫자를 한 글자씩 쪼개서 세로로 한 줄씩 출력해주는 헬퍼 함수
+function makeVerticalText(str) {
+    return str.split('').map(char => `<span>${char}</span>`).join('');
+}
+
 function renderShelf() {
     let shelfArea = document.getElementById('shelf-area');
-    shelfArea.innerHTML = ''; // 책장 영역 초기화 후 안전하게 다시 그림
+    shelfArea.innerHTML = '';
 
     let startIdx = currentZone * 250;
     
@@ -127,10 +121,14 @@ function renderShelf() {
             if (bookObj) {
                 let isCorrect = bookObj.id === globalIdx + 1;
                 bookEl.className = `book ${isCorrect ? 'correct' : ''}`;
-                // 위에 원래 번호(노란색), 아래에 현재 칸 번호 표시
+                
+                // 원래 번호와 현재 칸 번호를 글자 단위로 쪼개어 세로 배치
+                let origText = makeVerticalText(String(bookObj.id));
+                let currText = makeVerticalText(String(globalIdx + 1));
+
                 bookEl.innerHTML = `
-                    <span class="original-num">#${bookObj.id}</span>
-                    <span>${globalIdx + 1}</span>
+                    <div class="original-num">${origText}</div>
+                    <div class="current-num">${currText}</div>
                 `;
             } else {
                 bookEl.className = `book`;
@@ -138,9 +136,7 @@ function renderShelf() {
             }
 
             bookEl.onclick = (function(idx) {
-                return function() {
-                    clickBook(idx);
-                };
+                return function() { clickBook(idx); };
             })(globalIdx);
 
             rowDiv.appendChild(bookEl);
